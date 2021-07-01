@@ -1,7 +1,7 @@
 # inkpot
 a small simple library for generating documentation from docstrings
 
-is available on [pip](https://pypi.org/project/cira/). **Please give it a star if you like it!**
+is available on [pip](https://pypi.org/project/inkpot/). **Please give it a star if you like it!**
 
 <img src="https://cdn.pixabay.com/photo/2014/04/05/12/20/ink-316909_960_720.jpg" alt="drawing" width="300"/>
 
@@ -25,7 +25,7 @@ pip install inkpot
 ```bash
 python3 -m inkpot myfile.py
 ```
-or to a file 
+or to a file
 ```bash
 python3 -m inkpot myfile.py > doc.md
 ```
