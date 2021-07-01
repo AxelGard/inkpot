@@ -1,13 +1,13 @@
+import sys
 
-"""
-    FILE = "/home/axel/Programs/repositories/cira/cira/util.py"
 
+def main():
     flag = False
     last_func = ""
     table = {}
-    with open(FILE, 'r') as file:
+    with open(sys.argv[1], 'r') as file:
         for cnt, line in enumerate(file):
-        #print("Line {}: {}".format(cnt, line))
+            #print("Line {}: {}".format(cnt, line))
             if "def" in line:
                 func = line.replace("def ", '')
                 func = func.replace('\n', '')
@@ -26,9 +26,8 @@
     for func in table.keys():
         print(f"| %s |%s|" %(func, table[func]))
 
-"""
 
 
 
 if __name__ == "__main__":
-    pass 
+    main()
