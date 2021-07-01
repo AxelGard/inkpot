@@ -17,10 +17,18 @@ is available on [pip](https://pypi.org/project/cira/). **Please give it a star i
 
 
 ## Installation
-
+```bash
+pip install inkpot
+```
 
 ## Usage
-
+```bash
+python3 -m inkpot myfile.py
+```
+or to a file 
+```bash
+python3 -m inkpot myfile.py > doc.md
+```
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) file for details

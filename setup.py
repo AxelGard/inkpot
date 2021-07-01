@@ -15,13 +15,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
 
-    install_requires=[''],
-
-    extras_requires = {
-        "dev": [
-            "pytest"
-        ]
-    },
+    install_requires=[],
 
 
     classifiers=[
