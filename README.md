@@ -31,7 +31,7 @@ python3 -m inkpot myfile.py > doc.md
 ```
 
 Currently this returns a markdown table.
-More a better format will be added.
+More functionality and a better format will be added.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) file for details
