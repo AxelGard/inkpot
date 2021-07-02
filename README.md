@@ -14,7 +14,7 @@ inkpot is available on [pip](https://pypi.org/project/inkpot/). **Please give it
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/inkpot)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/inkpot)
 
-
+To know more about way I started this project checkout this **[blog post](https://axelgard.github.io/blog/inkpot/2021/07/01/inkpot-init.html)**
 
 ## Installation
 ```bash
