@@ -22,7 +22,8 @@ def main():
                 table[last_func] = doc
                 flag = False
 
-
+    print("| def | doc-str |")
+    print("| --- | --- |")
     for func in table.keys():
         print(f"| %s |%s|" %(func, table[func]))
 
