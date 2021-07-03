@@ -22,12 +22,18 @@ pip install inkpot
 ```
 
 ## Usage
+singel file
 ```bash
 python3 -m inkpot myfile.py
 ```
-or to a file
+or directory
+```bash
+python3 -m inkpot myproject/
+```
+output to a file (also works with directories)
 ```bash
 python3 -m inkpot myfile.py > doc.md
+python3 -m inkpot myproject/ > doc.md
 ```
 
 Currently this returns a markdown table.
