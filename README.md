@@ -39,5 +39,26 @@ python3 -m inkpot myproject/ > doc.md
 Currently this returns a markdown table.
 More functionality and a better format will be added.
 
+## Example
+
+Python file `ex/add.py`
+```python
+def add(a,b):
+    """ add to objects """
+    return a + b
+
+```
+```bash
+python3 -m inkpot ex/add.py
+```
+returns
+```
+# ex/add.py
+## ex/add.py
+| def | doc-str |
+| --- | --- |
+| add(a,b) | add to objects |
+```
+
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) file for details
