@@ -51,7 +51,7 @@ def add(a,b):
 ```bash
 python3 -m inkpot ex/add.py
 ```
-returns
+returns markdown
 ```
 # ex/add.py
 ## ex/add.py
