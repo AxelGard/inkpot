@@ -59,7 +59,7 @@ class File:
 
     def output(self):
         """ outputs all def and its doc str  """
-        print("# %s" %(self._path))
+        print("## %s" %(self._path))
         print("| def | doc-str |")
         print("| --- | --- |")
         for func, docstr in self.table.items():
