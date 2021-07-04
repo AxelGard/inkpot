@@ -12,7 +12,7 @@ def filter_file(file_path):
     with open(file_path, "r") as file:
         for cnt, line in enumerate(file):
             # print("Line {}: {}".format(cnt, line))
-            if "def" in line:
+            if line.lstrip().find("def ") == 0:
                 func = line.replace("def ", "")
                 func = func.replace("\n", "")
                 func = func.replace(":", "")
@@ -37,7 +37,7 @@ def filter_file(file_path):
                 doc += line.strip() + " "
 
                 if doc_open and doc_close:
-                    table[last_func] = doc.strip().strip(doc_token).strip().lower()
+                    table[last_func] = doc.strip().strip(doc_token).strip()
                     doc_open = None
                     doc_close = None
                     doc = ""
