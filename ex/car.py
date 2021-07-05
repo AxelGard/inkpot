@@ -19,6 +19,8 @@ class car:
         "the"
         ""horn""
         """
+        def nested_test():
+            pass
         # def
         test = "def"
         print("Honking...")
