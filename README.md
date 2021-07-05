@@ -55,9 +55,10 @@ returns markdown
 ```
 # ex/add.py
 ## ex/add.py
-| def | doc-str |
-| --- | --- |
-| add(a,b) | add to objects |
+| type   | name   | doc-str        |
+|:-------|:-------|:---------------|
+| def    | add    | add to objects |
+| module | add    | None           |
 ```
 
 ## License
