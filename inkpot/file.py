@@ -2,66 +2,72 @@
 class instance for one file
 """
 
+import ast
+
+from itertools import groupby
+from os.path import basename, splitext
+from tabulate import tabulate
+
 
 class File:
     """ File is for interacting with a singel file """
 
-    def __init__(self, path:str):
+    NODE_TYPES = {ast.Module: 'module',
+                  ast.ClassDef: 'class',
+                  ast.FunctionDef: 'def',
+                  ast.AsyncFunctionDef: 'async-def'
+                  }
+
+    def __init__(self, path: str, module: str = '<string>'):
         """ constructor """
         self._path = path
-        self.table = {}
+        self.module = module
+        self.grouped = None
+
+    def _get_docstrings(self, source):
+        tree = ast.parse(source)
+
+        for node in ast.walk(tree):
+            if isinstance(node, tuple(File.NODE_TYPES)):
+                docstring = ast.get_docstring(node)
+                lineno = getattr(node, 'lineno', None)
+
+                if (node.body and isinstance(node.body[0], ast.Expr) and
+                        isinstance(node.body[0].value, ast.Str)):
+
+                    lineno = node.body[0].lineno - \
+                        len(node.body[0].value.s.splitlines()) + 1
+
+                yield (node, getattr(node, 'name', None), lineno, docstring)
 
     def filter(self):
-        """ find the function and docstrings in the file """
-        flag = False
-        last_func = ""
+        """ find node-types and docstrings in the file """
+        # Source: https://gist.github.com/SpotlightKid/1548cb6c97f2a844f72d
+        with open(self._path) as source:
+            if hasattr(source, 'read'):
+                filename = getattr(source, 'name', self.module)
+                self.module = splitext(basename(filename))[0]
+                source = source.read()
 
-        doc_token = '"""'
-        doc_open = None
-        doc_close = None
-        doc = ""
-
-        self.table = {}
-        with open(self._path, "r") as file:
-            for cnt, line in enumerate(file):
-                if line.lstrip().find("def ") == 0:
-                    func = line.replace("def ", "")
-                    func = func.replace("\n", "")
-                    func = func.replace(":", "")
-                    self.table[func] = ""
-                    last_func = func
-                    flag = True
-                elif flag:
-                    if not doc_open:
-                        doc_open = (line.strip().find(doc_token), cnt)
-                        # No docstring found
-                        if doc_open[0] != 0:
-                            self.table[func] = "no docstring"
-                            doc_open = None
-                            flag = False
-                            continue
-
-                    if not doc_close:
-                        doc_close = (line.strip().rfind(doc_token), cnt)
-                        if doc_close == doc_open or doc_close[0] == -1:
-                            doc_close = None
-
-                    doc += line.strip() + " "
-
-                    if doc_open and doc_close:
-                        self.table[last_func] = doc.strip().strip(doc_token).strip()
-                        doc_open = None
-                        doc_close = None
-                        doc = ""
-                        flag = False
-        return self.table
-
+            docstrings = sorted(self._get_docstrings(source),
+                                key=lambda x: (File.NODE_TYPES.get(type(x[0])), x[1]))
+            self.grouped = groupby(
+                docstrings, key=lambda x: File.NODE_TYPES.get(type(x[0])))
 
     def output(self):
-        """ outputs all def and its doc str  """
-        print("## %s" %(self._path))
-        print("| def | doc-str |")
-        print("| --- | --- |")
-        for func, docstr in self.table.items():
-            print("| %s | %s |" %(func, docstr))
-        print("")
+        """ outputs all node-types and their respective docstrings """
+        if not self.grouped:
+            self.filter()
+
+        head = ["type", "name", "doc-str"]
+        table = []
+
+        for type_, group in self.grouped:
+            for node, name, lineno, docstring in group:
+                name = name if name else self.module
+                table.append([str(type_), str(name), str(docstring).strip()])
+
+        # Use pipe for markdown files
+        print("## %s" % (self._path))
+        print(tabulate(table, headers=head, tablefmt="pipe"))
+        print('\n')
