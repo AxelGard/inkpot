@@ -1,4 +1,8 @@
-class car:
+class Car:
+    class Engine:
+        def __init__(self):
+            self.fuel = 0
+
     def __init__(self):
         self.wheels = 0
         self.doors = 0
