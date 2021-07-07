@@ -40,15 +40,16 @@ More functionality and better formatting might be added.
 
 ## Example
 
-Python file `ex/add.py`
+Python file `tests/.ex/add.py`
 ```python
 def add(a,b):
     """ add to objects """
     return a + b
 
 ```
+
 ```bash
-python3 -m inkpot ex/add.py
+python3 -m inkpot add.py
 ```
 returns markdown
 ```

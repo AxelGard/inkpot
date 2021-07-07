@@ -1,9 +1,9 @@
-# ex
-## ex/car.py
-### class Car
+# ex/
+## ex//car.py
+### class Car()
 `The Car class` 
 
-> ### class Engine
+> ### class Engine()
 > `The Engine subclass` 
 >
 >> **def \_\_init\_\_(self)** \
@@ -34,13 +34,13 @@
 `None` 
 
 
-## ex/add.py
+## ex//add.py
 **def add(a, b)** \
 `add to objects ` 
 
 
 ## ex/recursive_ex/point.py
-### class Point
+### class Point()
 `Creates a point on a coordinate plane with values x and y.` 
 
 > **def \_\_init\_\_(self, x_init, y_init)** \
