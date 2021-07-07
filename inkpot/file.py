@@ -23,7 +23,7 @@ class File:
 
     def filter(self):
         """ find node-types and docstrings in the file """
-        with open(self._path) as source:
+        with open(self._path, 'rb') as source:
             if hasattr(source, 'read'):
                 source = source.read()
                 try:
