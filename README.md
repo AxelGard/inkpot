@@ -1,5 +1,5 @@
 # inkpot
-a small simple library for generating documentation from docstrings
+A small simple library for generating documentation from docstrings
 
 inkpot is available on [pip](https://pypi.org/project/inkpot/). **Please give it a star if you like it!**
 
@@ -22,7 +22,7 @@ pip install inkpot
 ```
 
 ## Usage
-singel file
+single file
 ```bash
 python3 -m inkpot myfile.py
 ```
@@ -36,8 +36,7 @@ python3 -m inkpot myfile.py > doc.md
 python3 -m inkpot myproject/ > doc.md
 ```
 
-Currently this returns a markdown table.
-More functionality and a better format will be added.
+More functionality and better formatting might be added.
 
 ## Example
 
@@ -55,10 +54,8 @@ returns markdown
 ```
 # ex/add.py
 ## ex/add.py
-| type   | name   | doc-str        |
-|:-------|:-------|:---------------|
-| def    | add    | add to objects |
-| module | add    | None           |
+**def add(a, b)** \
+`add to objects `
 ```
 
 ## License
