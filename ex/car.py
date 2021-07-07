@@ -1,15 +1,23 @@
-class car:
+class Car():
+    """The Car class"""
+    class Engine:
+        """The Engine subclass"""
+
+        def __init__(self):
+            self.fuel = 0
+
     def __init__(self):
+        super().__init__(self)
         self.wheels = 0
         self.doors = 0
         self.engine = ""
         self.number_plate = ""
 
-    def start(self):
+    def start(self, time: str, car_key):
         """starts the engine of the car"""
         self.engine = """Running"""
 
-    def stop(self):
+    def stop(self, a=1, b=2, c=None, *args, **kwargs):  # Comment after line
         """Stop the engine of the car!"""
         self.engine = "Stopping"
 
@@ -20,6 +28,7 @@ class car:
         ""horn""
         """
         def nested_test():
+            "nested function inside honk"
             pass
         # def
         test = "def"
@@ -28,7 +37,11 @@ class car:
 
     def __str__(self):
         """
-        example of a longer multiline-docstring,
-        everything will be printed on a single line
+        Eexample of a longer multiline-docstring,
+        everything will still be formatted correctly
         """
         return self.number_plate
+
+
+def no_class_def_test():
+    pass

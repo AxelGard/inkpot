@@ -4,70 +4,99 @@ class instance for one file
 
 import ast
 
-from itertools import groupby
-from os.path import basename, splitext
-from tabulate import tabulate
-
 
 class File:
     """ File is for interacting with a singel file """
 
-    NODE_TYPES = {ast.Module: 'module',
-                  ast.ClassDef: 'class',
+    NODE_TYPES = {ast.ClassDef: 'class',
                   ast.FunctionDef: 'def',
-                  ast.AsyncFunctionDef: 'async-def'
+                  # ast.AsyncFunctionDef: 'async-def'
                   }
 
-    def __init__(self, path: str, module: str = '<string>'):
+    def __init__(self, path: str):
         """ constructor """
         self._path = path
-        self.module = module
-        self.grouped = None
-
-    def _get_docstrings(self, source):
-        tree = ast.parse(source)
-
-        for node in ast.walk(tree):
-            if isinstance(node, tuple(File.NODE_TYPES)):
-                docstring = ast.get_docstring(node)
-                lineno = getattr(node, 'lineno', None)
-
-                if (node.body and isinstance(node.body[0], ast.Expr) and
-                        isinstance(node.body[0].value, ast.Str)):
-
-                    lineno = node.body[0].lineno - \
-                        len(node.body[0].value.s.splitlines()) + 1
-
-                yield (node, getattr(node, 'name', None), lineno, docstring)
+        self.nodes = {}
+        for type_ in File.NODE_TYPES.values():
+            self.nodes[type_] = {}
 
     def filter(self):
         """ find node-types and docstrings in the file """
-        # Source: https://gist.github.com/SpotlightKid/1548cb6c97f2a844f72d
         with open(self._path) as source:
             if hasattr(source, 'read'):
-                filename = getattr(source, 'name', self.module)
-                self.module = splitext(basename(filename))[0]
                 source = source.read()
+                tree = ast.parse(source)
 
-            docstrings = sorted(self._get_docstrings(source),
-                                key=lambda x: (File.NODE_TYPES.get(type(x[0])), x[1]))
-            self.grouped = groupby(
-                docstrings, key=lambda x: File.NODE_TYPES.get(type(x[0])))
+                for node in ast.walk(tree):
+                    # Classes
+                    if isinstance(node, ast.ClassDef):
+                        node.__doc__ = ast.get_docstring(node)
+                        node.name = ast.unparse(node).split('\n')[0][6:-1]
+
+                        new_body = []
+                        for child in node.body:
+                            # Class methods
+                            if isinstance(child, ast.FunctionDef):
+                                child.parent = node
+                                new_body.append(child)
+                            # Nested class support
+                            if isinstance(child, ast.ClassDef):
+                                child.parent = node
+                                new_body.append(child)
+
+                        node.body = new_body
+                    # Functions
+                    if isinstance(node, ast.FunctionDef):
+                        node.__doc__ = ast.get_docstring(node)
+                        node.name = ast.unparse(node).split('\n')[0][4:-1]
+
+                        new_body = []
+                        for child in node.body:
+                            # Nested function support
+                            if isinstance(child, ast.FunctionDef):
+                                child.parent = node
+                                new_body.append(child)
+
+                        node.body = new_body
+
+                    if isinstance(node, tuple(File.NODE_TYPES)):
+                        # Only add root nodes, they must also have a name
+                        if hasattr(node, 'name') and not hasattr(node, 'parent'):
+                            type_ = File.NODE_TYPES.get(type(node))
+                            self.nodes[type_][str(node.name)] = node
+
+    @staticmethod
+    def recursive_tree(node, layer=0):
+        type_ = File.NODE_TYPES.get(type(node))
+        header = (type_ + " " + node.name).replace("*",
+                                                   "\*").replace("__", "\_\_")
+        docstring = ""
+        for line in str(node.__doc__).split('\n'):
+            docstring += '`' + line + '` \\\n'
+        docstring = docstring.rstrip().rstrip('\\')
+
+        if type(node) == ast.ClassDef:
+            header = '### ' + header
+        elif type(node) == ast.FunctionDef:
+            header = '**' + header + '** \\'
+
+        if layer > 0:
+            print(">" * layer, header)
+            print(">" * layer, docstring)
+            print(">" * layer)
+        else:
+            print(header)
+            print(docstring, end="\n\n")
+
+        if len(node.body) > 0:
+            for child in node.body:
+                File.recursive_tree(child, layer+1)
 
     def output(self):
         """ outputs all node-types and their respective docstrings """
-        if not self.grouped:
-            self.filter()
 
-        head = ["type", "name", "doc-str"]
-        table = []
-
-        for type_, group in self.grouped:
-            for node, name, lineno, docstring in group:
-                name = name if name else self.module
-                table.append([str(type_), str(name), str(docstring).strip()])
-
-        # Use pipe for markdown files
-        print("## %s" % (self._path))
-        print(tabulate(table, headers=head, tablefmt="pipe"))
-        print('\n')
+        print('## %s' % (self._path))
+        for type_ in self.nodes:
+            for root_node in self.nodes[type_].values():
+                File.recursive_tree(root_node)
+        print('')

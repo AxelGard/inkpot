@@ -15,8 +15,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
 
-    install_requires=["tabulate"],
-
+    install_requires=[],
 
     classifiers=[
         "Development Status :: 4 - Beta",
