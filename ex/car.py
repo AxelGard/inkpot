@@ -28,6 +28,7 @@ class Car():
         ""horn""
         """
         def nested_test():
+            "nested function inside honk"
             pass
         # def
         test = "def"
@@ -37,7 +38,7 @@ class Car():
     def __str__(self):
         """
         Eexample of a longer multiline-docstring,
-        everything will be printed on a single line
+        everything will still be formatted correctly
         """
         return self.number_plate
 
