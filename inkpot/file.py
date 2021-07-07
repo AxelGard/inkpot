@@ -3,7 +3,7 @@ class instance for one file
 """
 
 import ast
-
+import astunparse
 
 class File:
     """ File is for interacting with a singel file """
@@ -35,7 +35,7 @@ class File:
                         # Classes
                         if isinstance(node, ast.ClassDef):
                             node.__doc__ = ast.get_docstring(node)
-                            node.name = ast.unparse(node).split('\n')[0][6:-1]
+                            node.name = astunparse.unparse(ast.parse(node)).split('\n')[2][6:-1]
 
                             new_body = []
                             for child in node.body:
@@ -52,7 +52,8 @@ class File:
                         # Functions
                         if isinstance(node, ast.FunctionDef):
                             node.__doc__ = ast.get_docstring(node)
-                            node.name = ast.unparse(node).split('\n')[0][4:-1]
+
+                            node.name = astunparse.unparse(ast.parse(node)).split('\n')[2][4:-1]
 
                             new_body = []
                             for child in node.body:
