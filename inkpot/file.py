@@ -70,7 +70,10 @@ class File:
         type_ = File.NODE_TYPES.get(type(node))
         header = (type_ + " " + node.name).replace("*",
                                                    "\*").replace("__", "\_\_")
-        docstring = '`' + str(node.__doc__) + '`'
+        docstring = ""
+        for line in str(node.__doc__).split('\n'):
+            docstring += '`' + line + '` \\\n'
+        docstring = docstring.rstrip().rstrip('\\')
 
         if type(node) == ast.ClassDef:
             header = '### ' + header
