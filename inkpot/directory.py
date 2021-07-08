@@ -26,10 +26,10 @@ class Directory:
                 if f.endswith(".py"):
                     self.files.append(File(f"{path}/{f}"))
 
-    def filter_files(self):
+    def parse_files(self):
         """ filter all files in dir """
         for f in self.files:
-            f.filter()
+            f.parse()
 
     def output(self):
         """ output all the files in dir to the user """

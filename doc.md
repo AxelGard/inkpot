@@ -1,5 +1,5 @@
-# ex/
-## ex//car.py
+# tests/.ex/
+## tests/.ex/car.py
 ### class Car()
 `The Car class` 
 
@@ -34,12 +34,12 @@
 `None` 
 
 
-## ex//add.py
+## tests/.ex/add.py
 **def add(a, b)** \
 `add to objects ` 
 
 
-## ex/recursive_ex/point.py
+## tests/.ex/recursive_ex/point.py
 ### class Point()
 `Creates a point on a coordinate plane with values x and y.` 
 
