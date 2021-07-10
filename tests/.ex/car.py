@@ -42,6 +42,13 @@ class Car():
         """
         return self.number_plate
 
+    @staticmethod
+    def funcname(parameter_list):
+        """
+        docstring
+        """
+        pass
+
 
 def no_class_def_test():
     pass

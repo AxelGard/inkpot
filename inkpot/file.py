@@ -18,8 +18,10 @@ class File:
 
         @staticmethod
         def get_line_def(node):
-            return astunparse.unparse(node).split('\n')[2][:-1] \
-                .replace("*", "\*").replace("__", "\_\_")
+            line = astunparse.unparse(node).split('\n')[2][:-1]
+            if "@" in line:
+                line = astunparse.unparse(node).split('\n')[3][:-1]
+            return line.replace("*", "\*").replace("__", "\_\_")
 
         @staticmethod
         def get_docstring(node):
