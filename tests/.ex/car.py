@@ -1,4 +1,4 @@
-class Car():
+class Car:
     """The Car class"""
     class Engine:
         """The Engine subclass"""
@@ -7,7 +7,6 @@ class Car():
             self.fuel = 0
 
     def __init__(self):
-        super().__init__(self)
         self.wheels = 0
         self.doors = 0
         self.engine = ""
@@ -44,11 +43,11 @@ class Car():
 
     @staticmethod
     @staticmethod
-    def funcname(parameter_list):
+    def funcname(param1: str, param2: int):
         """
-        docstring
+        The docstring to the static method
         """
-        pass
+        print(param1, param2)
 
 
 def no_class_def_test():
