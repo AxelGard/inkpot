@@ -10,18 +10,31 @@ class File:
     """ File is for interacting with a singel file """
 
     class MarkDownVisitor(ast.NodeVisitor):
-        """ 
+        """
         Overrides ast.NodeVisitor with custom NodeVisitor class for
         markdown files. When a class or function are visited their
         name and docstring are printed.
         """
 
         @staticmethod
+        def get_decorators(node):
+            decorators = []
+            if hasattr(node, 'decorator_list'):
+                for decorator in node.decorator_list:
+                    if hasattr(decorator, 'id'):
+                        decorators.append(decorator)
+            return decorators
+
+        @staticmethod
         def get_line_def(node):
-            line = astunparse.unparse(node).split('\n')[2][:-1]
-            if "@" in line:
-                line = astunparse.unparse(node).split('\n')[3][:-1]
-            return line.replace("*", "\*").replace("__", "\_\_")
+            node_source = astunparse.unparse(node)
+            decorators = File.MarkDownVisitor.get_decorators(node)
+            if len(decorators) > 0:
+                node_source = " \\\n".join(node_source.split("\n")[
+                    2:len(decorators)+3])
+            else:
+                node_source = node_source.split('\n')[2]
+            return node_source[:-1].replace("*", "\\*").replace("__", "\\_\\_")
 
         @staticmethod
         def get_docstring(node):
@@ -86,10 +99,13 @@ class File:
 
     def output(self):
         """ outputs all node-types and their respective docstrings """
-        if self.parse_error:
-            print("Could not parse file:", self._path, self.parse_error)
+        if self.tree is not None:
+            if self.parse_error:
+                print("Could not parse file:", self._path, self.parse_error)
+            else:
+                print('## %s' % (self._path.replace("//", '/')))
+                self.visitor = File.MarkDownVisitor()
+                self.visitor.visit(self.tree)
+            print('')
         else:
-            print('## %s' % (self._path.replace("//", '/')))
-            self.visitor = File.MarkDownVisitor()
-            self.visitor.visit(self.tree)
-        print('')
+            print('File must be parsed first. Use the "parse()" method')

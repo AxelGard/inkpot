@@ -43,6 +43,7 @@ class Car():
         return self.number_plate
 
     @staticmethod
+    @staticmethod
     def funcname(parameter_list):
         """
         docstring
