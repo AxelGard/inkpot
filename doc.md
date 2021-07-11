@@ -30,6 +30,11 @@
 > `Eexample of a longer multiline-docstring,` \
 `everything will still be formatted correctly` 
 >
+> **@staticmethod \
+@staticmethod \
+def funcname(param1: str, param2: int)** \
+> `The docstring to the static method` 
+>
 **def no_class_def_test()** \
 `None` 
 
