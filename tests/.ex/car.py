@@ -1,3 +1,6 @@
+import asyncio
+
+
 class Car:
     """The Car class"""
     class Engine:
@@ -36,7 +39,7 @@ class Car:
 
     def __str__(self):
         """
-        Eexample of a longer multiline-docstring,
+        Example of a longer multiline-docstring,
         everything will still be formatted correctly
         """
         return self.number_plate
@@ -48,6 +51,15 @@ class Car:
         The docstring to the static method
         """
         print(param1, param2)
+
+
+async def async_def_test(a, b, c):
+    """
+    Testing coroutines declared with async syntax
+    """
+    print("hello")
+    await asyncio.sleep(1)
+    print("world")
 
 
 def no_class_def_test():

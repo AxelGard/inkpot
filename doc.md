@@ -27,7 +27,7 @@
 >> `nested function inside honk` 
 >>
 > **def \_\_str\_\_(self)** \
-> `Eexample of a longer multiline-docstring,` \
+> `Example of a longer multiline-docstring,` \
 `everything will still be formatted correctly` 
 >
 > **@staticmethod \
@@ -35,6 +35,9 @@
 def funcname(param1: str, param2: int)** \
 > `The docstring to the static method` 
 >
+**async def async_def_test(a, b, c)** \
+`Testing coroutines declared with async syntax` 
+
 **def no_class_def_test()** \
 `None` 
 

@@ -69,6 +69,9 @@ class File:
             self.ouput(node, header, docstring)
             self.generic_visit(node)
 
+        def visit_AsyncFunctionDef(self, node):
+            self.visit_FunctionDef(node)
+
     def __init__(self, path: str):
         """ constructor """
         self._path = path
