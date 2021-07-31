@@ -53,10 +53,10 @@ python3 -m inkpot add.py
 ```
 returns markdown
 ```
-# ex/add.py
-## ex/add.py
+# tests/.ex/add.py
+## tests/.ex/add.py
 **def add(a, b)** \
-`add to objects `
+`add to objects ` 
 ```
 
 ## License
