@@ -49,14 +49,14 @@ def add(a,b):
 ```
 
 ```bash
-python3 -m inkpot add.py
+python3 -m inkpot tests/.ex/add.py
 ```
 returns markdown
 ```
 # tests/.ex/add.py
 ## tests/.ex/add.py
 **def add(a, b)** \
-`add to objects ` 
+`add to objects `
 ```
 
 ## License
