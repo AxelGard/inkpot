@@ -40,6 +40,10 @@ More functionality and better formatting might be added.
 
 ## Example
 
+On the [wiki](https://github.com/AxelGard/inkpot/wiki/inkpot-src-docs) you can se the result of running inkpot on the inkpot source code.
+
+Here is a small example from the test files. 
+
 Python file `tests/.ex/add.py`
 ```python
 def add(a,b):
