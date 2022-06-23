@@ -3,7 +3,7 @@ class instance for one file
 """
 
 import ast
-import astunparse
+from . import astunparse
 from .config import MD_CHAR
 
 
@@ -31,7 +31,7 @@ class File:
         def get_docstring(node):
             docstring = ""
             for line in str(ast.get_docstring(node)).split("\n"):
-                docstring += "`" + line + "` \\\n"
+                docstring += MD_CHAR["doc_str_start"] + line + MD_CHAR["doc_str_end"] + " \\\n"
             docstring = docstring.rstrip().rstrip("\\")
             return docstring
 
@@ -65,7 +65,7 @@ class File:
 
         def visit_FunctionDef(self, node):
             self.link_children(node)
-            header = MD_CHAR["function_def"] + self.get_line_def(node) + MD_CHAR["function_def"] + " \\"
+            header = MD_CHAR["function_def_start"] + self.get_line_def(node) + MD_CHAR["function_def_end"] + " \\"
             docstring = self.get_docstring(node)
             self.ouput(node, header, docstring)
             self.generic_visit(node)
