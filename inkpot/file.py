@@ -4,6 +4,7 @@ class instance for one file
 
 import ast
 import astunparse
+from .config import MD_CHAR
 
 
 class File:
@@ -48,23 +49,23 @@ class File:
         @staticmethod
         def ouput(node, header, docstring):
             if node.col_offset > 0:
-                print(">" * node.col_offset, header)
-                print(">" * node.col_offset, docstring)
-                print(">" * node.col_offset)
+                print(MD_CHAR["depth"] * node.col_offset, header)
+                print(MD_CHAR["depth"] * node.col_offset, docstring)
+                print(MD_CHAR["depth"] * node.col_offset)
             else:
                 print(header)
                 print(docstring, end="\n\n")
 
         def visit_ClassDef(self, node):
             self.link_children(node)
-            header = "### " + self.get_line_def(node)
+            header =  MD_CHAR["class_def"] + " " + self.get_line_def(node)
             docstring = self.get_docstring(node)
             self.ouput(node, header, docstring)
             self.generic_visit(node)
 
         def visit_FunctionDef(self, node):
             self.link_children(node)
-            header = "**" + self.get_line_def(node) + "** \\"
+            header = MD_CHAR["function_def"] + self.get_line_def(node) + MD_CHAR["function_def"] + " \\"
             docstring = self.get_docstring(node)
             self.ouput(node, header, docstring)
             self.generic_visit(node)
@@ -94,11 +95,13 @@ class File:
         """ outputs all node-types and their respective docstrings """
         if self.tree is not None:
             if self.parse_error:
-                print("Could not parse file:", self._path, self.parse_error)
+                #print("Could not parse file:", self._path, self.parse_error)
+                raise  ValueError("Could not parse file:", self._path, self.parse_error)
             else:
-                print("## %s" % (self._path.replace("//", "/")))
+                print("%s %s" % (MD_CHAR["file_path"] ,self._path.replace("//", "/")))
                 self.visitor = File.MarkDownVisitor()
                 self.visitor.visit(self.tree)
             print("")
         else:
-            print("File must be parsed first. Use the \"parse()\" method")
+            #print("File must be parsed first. Use the \"parse()\" method")
+            raise ValueError("File must be parsed first. Use the \"parse()\" method")

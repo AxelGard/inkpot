@@ -3,9 +3,9 @@ from .directory import Directory
 
 
 def main():
-    dir = Directory(sys.argv[1])
-    dir.parse_files()
-    dir.output()
+    directory = Directory(sys.argv[1])
+    directory.parse_files()
+    directory.output()
 
 
 if __name__ == "__main__":

@@ -5,6 +5,7 @@ class instance for a directory
 from os import walk
 from os.path import isfile
 from .file import File
+from .config import MD_CHAR
 
 
 class Directory:
@@ -39,4 +40,4 @@ class Directory:
 
     def header_output(self):
         """ outputs the dir header """
-        print("# %s" % (self._path))
+        print("%s %s" % (MD_CHAR["root_path"],self._path))
