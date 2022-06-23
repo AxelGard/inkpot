@@ -18,7 +18,7 @@ setup(
     install_requires=["astunparse"],
 
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Topic :: Documentation",
         "Topic :: Software Development :: Documentation",
         "License :: OSI Approved :: MIT License",
