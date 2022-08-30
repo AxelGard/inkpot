@@ -41,3 +41,9 @@ class Directory:
     def header_output(self):
         """ outputs the dir header """
         print("%s %s" % (MD_CHAR["root_path"],self._path))
+
+    def __str__(self):
+        result = str(MD_CHAR['root_path']) + " " + self._path + " "
+        for f in self.files:
+            result += str(f) + " "
+        return result

@@ -105,3 +105,18 @@ class File:
         else:
             #print("File must be parsed first. Use the \"parse()\" method")
             raise ValueError("File must be parsed first. Use the \"parse()\" method")
+
+
+    def __str__(self):
+        result = ""
+        if self.tree is not None:
+            if self.parse_error:
+                raise  ValueError("Could not parse file:", self._path, self.parse_error)
+            else:
+                result += "%s %s" % (MD_CHAR["file_path"] ,self._path.replace("//", "/"))
+                self.visitor = File.MarkDownVisitor()
+                self.visitor.visit(self.tree)
+            result += " "
+        else:
+            raise ValueError("File must be parsed first. Use the \"parse()\" method")
+        return result
