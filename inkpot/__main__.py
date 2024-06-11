@@ -1,5 +1,5 @@
 import sys
-from .directory import Directory
+from inkpot.directory import Directory
 
 
 def main():

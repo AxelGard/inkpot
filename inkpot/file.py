@@ -3,8 +3,8 @@ class instance for one file
 """
 
 import ast
-from . import astunparse
-from .config import MD_CHAR
+from inkpot.astunparse import unparse 
+from inkpot.config import MD_CHAR
 
 
 class File:
@@ -19,7 +19,7 @@ class File:
 
         @staticmethod
         def get_line_def(node):
-            node_source = astunparse.unparse(node).strip()
+            node_source = unparse(node).strip()
             node_source_split = node_source.split("\n")
             for i, line in enumerate(node_source_split):
                 if line.strip()[-1] == ":":

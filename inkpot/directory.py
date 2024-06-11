@@ -4,8 +4,8 @@ class instance for a directory
 
 from os import walk
 from os.path import isfile
-from .file import File
-from .config import MD_CHAR
+from inkpot.file import File
+from inkpot.config import MD_CHAR
 
 
 class Directory:
