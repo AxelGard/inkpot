@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='inkpot',
-    version='2.2.6',
+    version='2.2.7',
     description='a small simple library for generating documentation from docstrings',
     url='https://github.com/AxelGard/inkpot',
     author='Axel Gard',
@@ -16,6 +16,7 @@ setup(
     long_description_content_type="text/markdown",
 
     install_requires=[
+        "six==1.16.0"
     ],
 
     classifiers=[
